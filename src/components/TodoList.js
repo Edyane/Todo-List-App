@@ -1,50 +1,50 @@
-import React, { useState } from 'react';
-import TodoForm from './TodoForm';
-import Todo from './Todo';
+import React, { useState } from "react";
+import TodoForm from "./TodoForm";
+import Todo from "./Todo";
+import { useDispatch, useSelector } from "react-redux";
+import { createTask, deleteTask, updateTask } from "../store/tasks";
 
 function TodoList() {
-    const [todos, setTodos] = useState ([]);
+  const todos = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
-    const addTodo = todo => {
-        if(!todo.text || /^\s*$/.test(todo.text)) {
-            return
-        }
-
-        const newTodos = [todo, ...todos];
-
-        setTodos(newTodos);        
-    };
-
-    const updateTodo = (todoId, newValue) => {
-        if (!newValue.text || /^\s*$/.test(newValue.text)) {
-            return;
-        }
-        setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+  const addTodo = (todo) => {
+    if (!todo.text || /^\s*$/.test(todo.text)) {
+      return;
     }
 
-    const removeTodo = id => {
-        const removeArr = [...todos].filter(todo => todo.id !== id)
+    dispatch(createTask(todo));
+  };
 
-        setTodos(removeArr);
+  const updateTodo = (todoId, newValue) => {
+    if (!newValue.text || /^\s*$/.test(newValue.text)) {
+      return;
     }
 
-    const completeTodo = id => {
-        let updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
-                todo.isComplete = !todo.isComplete;
-            }
-            return todo;
-        });
-        setTodos (updatedTodos);
-    }
+    dispatch(updateTask({ id: todoId, newValue }));
+  };
 
-    return (
-        <div>
-            <h1>What's the Plan for Today?</h1>
-            <TodoForm onSubmit={addTodo} />
-            <Todo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo} />
-        </div>
-    )
+  const removeTodo = (id) => dispatch(deleteTask({ id }));
+
+  const completeTodo = (id) => {
+    const todo = todos.find((todo) => todo.id === id);
+    dispatch(
+      updateTask({ id, newValue: { ...todo, isComplete: !todo.isComplete } })
+    );
+  };
+
+  return (
+    <div>
+      <h1>What's the Plan for Today?</h1>
+      <TodoForm onSubmit={addTodo} />
+      <Todo
+        todos={todos}
+        completeTodo={completeTodo}
+        removeTodo={removeTodo}
+        updateTodo={updateTodo}
+      />
+    </div>
+  );
 }
 
 export default TodoList;
