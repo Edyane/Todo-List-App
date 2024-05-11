@@ -7,11 +7,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 <br>
 
-### 👩‍💻 Descrição:
-Atividade desenvolvida para o trainee da Orc'estra Gamificação - Empresa Júnior de Engenharia de Software da Universidade de Brasília.
-
-<br>
-
 ### ⚙ Tutorial:
 Youtube: https://www.youtube.com/watch?v=E1E08i2UJGI
 
@@ -19,4 +14,4 @@ Youtube: https://www.youtube.com/watch?v=E1E08i2UJGI
  
 ### 📊 Status do Projeto:
 
-<h4>🚧  Em construção...  🚧</h4>
+<h4>🚧 Finalizado  🚧</h4>
